@@ -1,0 +1,16 @@
+# Ignore dependencies
+node_modules/
+venv/
+packages/
+
+# Ignore logs and generated files
+*.log
+/build/
+/dist/
+
+# Ignore sensitive information
+.env
+
+# Ignore IDE or editor-specific files
+.vscode/
+.idea/
