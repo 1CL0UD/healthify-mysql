@@ -1,7 +1,10 @@
 import express from 'express';
-import { getUsers, getUserById, addUser } from './handlers/user.js';
+import userRoutes from './routes/user.js';
 
 const app = express();
+app.use(express.json());
+
+app.use('/user', userRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
