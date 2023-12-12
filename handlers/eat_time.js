@@ -10,11 +10,11 @@ export async function getEat_timeById(id) {
     `
     SELECT * 
     FROM eat_time 
-    WHERE ID = ?
+    WHERE eat_time_id = ?
     `,
     [id]
   );
-  return rows[0];
+  return rows;
 }
 
 export async function addEat_time(diary_id, food_id, eat_time, food_name) {

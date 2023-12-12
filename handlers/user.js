@@ -10,11 +10,11 @@ export async function getUserById(id) {
     `
   SELECT * 
   FROM user 
-  WHERE ID = ?
+  WHERE user_id = ?
   `,
     [id]
   );
-  return rows[0];
+  return rows;
 }
 
 export async function addUser(user_id, google_id, username, email, password) {

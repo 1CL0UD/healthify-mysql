@@ -10,11 +10,25 @@ export async function getDiaryById(id) {
     `
     SELECT * 
     FROM diary
-    WHERE ID = ?
+    WHERE diary_id = ?
     `,
     [id]
   );
-  return rows[0];
+  return rows;
+}
+
+export async function getDiaryByIdWithName(id) {
+  const [rows] = await pool.query(
+    `
+  SELECT eat.*, foods.food_name
+  FROM eat_time AS eat
+  JOIN foods ON eat.food_id = foods.food_id
+  WHERE eat.diary_id = ?; 
+  `,
+    [id]
+  );
+
+  return rows;
 }
 
 export async function addDiary(diary_id, user_id, diary_date, calorie_target) {

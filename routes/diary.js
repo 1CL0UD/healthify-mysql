@@ -1,5 +1,10 @@
 import express from 'express';
-import { getDiary, getDiaryById, addDiary } from '../handlers/diary.js';
+import {
+  getDiary,
+  getDiaryById,
+  getDiaryByIdWithName,
+  addDiary,
+} from '../handlers/diary.js';
 
 const router = express.Router();
 router.get('/', async (req, res) => {
@@ -9,14 +14,20 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
-  const notes = await getDiaryById(id);
-  res.status(201).send(notes);
+  const diary = await getDiaryById(id);
+  res.status(201).send(diary);
+});
+
+router.get('/diaryId/:id', async (req, res) => {
+  const id = req.params.id;
+  const diary = await getDiaryByIdWithName(id);
+  res.status(201).send(diary);
 });
 
 router.post('/', async (req, res) => {
   const { diary_id, user_id, diary_date, calorie_target } = req.body;
-  const notes = await addDiary(diary_id, user_id, diary_date, calorie_target);
-  res.send(notes);
+  const diary = await addDiary(diary_id, user_id, diary_date, calorie_target);
+  res.send(diary);
 });
 
 export default router;

@@ -10,14 +10,21 @@ export async function getHealth_dataById(id) {
     `
   SELECT * 
   FROM health_data
-  WHERE ID = ?
+  WHERE health_data_id = ?
   `,
     [id]
   );
-  return rows[0];
+  return rows;
 }
 
-export async function addHealth_data(user_id, energy_char, weight, height, steps, heart_rate) {
+export async function addHealth_data(
+  user_id,
+  energy_char,
+  weight,
+  height,
+  steps,
+  heart_rate
+) {
   const [result] = await pool.query(
     `
   INSERT INTO user (user_id, energy_char, weight, height, steps, heart_rate) 
