@@ -4,28 +4,44 @@ import diaryRoutes from './routes/diary.js';
 import eatTimeRoutes from './routes/eat_time.js';
 import foodRoutes from './routes/foods.js';
 import healthDataRoutes from './routes/health_data.js';
+import registerRoutes from './routes/register.js';
+import loginRoutes from './routes/login.js';
+import { authenticateUser } from './middleware/auth.js';
+import { verifyToken } from './middleware/verifyToken.js';
+import jwt from 'jsonwebtoken';
 
 const app = express();
 app.use(express.json());
-app.get('/', (req, res) => {
-  res.send('hello world');
+
+app.get('/', async (req, res) => {
+  const username = 'username';
+  const password = 'password';
+  const user = await authenticateUser(username, password);
+  if (user) {
+    res.status(201).send('hello world'); // Return 'hello world' if login is successful
+  } else {
+    res.status(401).send('Not hello world'); // Return 'Not hello world' if login fails
+  }
 });
 
-app.use('/user', userRoutes);
+// Use the login routes
+app.use('/login', loginRoutes);
 
-app.use('/diary', diaryRoutes);
+app.use('/register', registerRoutes);
 
-app.use('/eat-time', eatTimeRoutes);
-
-app.use('/food', foodRoutes);
-
-app.use('/health-data', healthDataRoutes);
+// Routes to retrieve data from MySQL Database
+app.use('/user', verifyToken, userRoutes);
+app.use('/diary', verifyToken, diaryRoutes);
+app.use('/eat-time', verifyToken, eatTimeRoutes);
+app.use('/food', verifyToken, foodRoutes);
+app.use('/health-data', verifyToken, healthDataRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong');
 });
 
-app.listen(8080, () => {
-  console.log('Server is running');
+const port = 8080;
+app.listen(port, () => {
+  console.log('Server is running http://localhost:' + port);
 });
