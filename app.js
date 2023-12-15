@@ -33,11 +33,11 @@ app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
 
 // Routes to retrieve data from MySQL Database
-app.use('/user', verifyToken, userRoutes);
-app.use('/diary', verifyToken, diaryRoutes);
-app.use('/eat-time', verifyToken, eatTimeRoutes);
-app.use('/food', verifyToken, foodRoutes);
-app.use('/health-data', verifyToken, healthDataRoutes);
+app.use('/user', userRoutes);
+app.use('/diary', diaryRoutes);
+app.use('/eat-time', eatTimeRoutes);
+app.use('/food', foodRoutes);
+app.use('/health-data', healthDataRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
