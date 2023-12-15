@@ -25,13 +25,17 @@ router.post('/', async (req, res) => {
     connection.release();
 
     if (existingUsers.length > 0) {
-      return res.status(400).json({ error: 'Username already exists' });
+      return res.status(400).json({
+        error: true,
+        message: 'Username already used by another user',
+      });
     }
 
     if (existingUserEmail.length > 0) {
-      return res
-        .status(400)
-        .json({ error: 'Email already used by another user' });
+      return res.status(400).json({
+        error: true,
+        message: 'Email already used by another user',
+      });
     }
 
     // Hash the password before saving it
@@ -50,7 +54,10 @@ router.post('/', async (req, res) => {
     await userConnection.query(insertUserQuery, newUser);
     userConnection.release();
 
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).json({
+      error: false,
+      message: 'User created successfully',
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
