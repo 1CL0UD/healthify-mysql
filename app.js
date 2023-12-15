@@ -18,7 +18,10 @@ app.get('/', async (req, res) => {
   const password = 'password';
   const user = await authenticateUser(username, password);
   if (user) {
-    res.status(201).send('hello world'); // Return 'hello world' if login is successful
+    res.status(201).json({
+      error: false,
+      message: 'Hello World',
+    });
   } else {
     res.status(401).send('Not hello world'); // Return 'Not hello world' if login fails
   }
