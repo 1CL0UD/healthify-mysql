@@ -2,6 +2,9 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { authenticateUser } from '../middleware/auth.js';
+import dotenv from 'dotenv';
+dotenv.config();
+const secretKey = process.env.JWT_SECRET_KEY;
 
 const loginRouter = express.Router();
 
@@ -10,7 +13,7 @@ loginRouter.post('/', async (req, res) => {
   const user = await authenticateUser(username, password);
 
   if (user) {
-    const token = jwt.sign({ username: user.username }, 'your_secret_key', {
+    const token = jwt.sign({ username: user.username }, secretKey, {
       expiresIn: '1h',
     });
     const loggedIn = {
