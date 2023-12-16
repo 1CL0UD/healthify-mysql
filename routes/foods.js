@@ -14,8 +14,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { user_id, food_name, energy, protein, carbohydrate } = req.body;
-  const notes = await addFood(user_id, food_name, energy, protein, carbohydrate);
+  const { user_id, food_name, energy, protein, carbohydrate, fat } = req.body;
+  const notes = await addFood(
+    user_id,
+    food_name,
+    energy,
+    protein,
+    carbohydrate,
+    fat
+  );
   res.send(notes);
 });
 

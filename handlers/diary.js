@@ -31,13 +31,13 @@ export async function getDiaryByIdWithName(id) {
   return rows;
 }
 
-export async function addDiary(diary_id, user_id, diary_date, calorie_target) {
+export async function addDiary(user_id, diary_date, calorie_target) {
   const [result] = await pool.query(
     `
-    INSERT INTO diary (diary_id, user_id, diary_date, calorie_target) 
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO diary (user_id, diary_date, calorie_target) 
+    VALUES (?, ?, ?)
     `,
-    [diary_id, user_id, diary_date, calorie_target]
+    [user_id, diary_date, calorie_target]
   );
   const id = result.insertId;
   return getDiaryById(id);

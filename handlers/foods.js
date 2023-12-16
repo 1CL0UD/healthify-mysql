@@ -22,14 +22,15 @@ export async function addFood(
   food_name,
   energy,
   protein,
-  carbohydrate
+  carbohydrate,
+  fat
 ) {
   const [result] = await pool.query(
     `
-  INSERT INTO user (user_id, food_name, energy, protein, carbohydrate) 
-  VALUES (?, ?, ?, ?, ?)
+  INSERT INTO user (user_id, food_name, energy, protein, carbohydrate, fat) 
+  VALUES (?, ?, ?, ?, ?, ?)
   `,
-    [user_id, food_name, energy, protein, carbohydrate]
+    [user_id, food_name, energy, protein, carbohydrate, fat]
   );
   const id = result.insertId;
   return getFoodsById(id);
