@@ -9,9 +9,12 @@ import loginRoutes from './routes/login.js';
 import { authenticateUser } from './middleware/auth.js';
 import { verifyToken } from './middleware/verifyToken.js';
 import jwt from 'jsonwebtoken';
+import setCors from './middleware/corsMiddleware.js';
 
 const app = express();
 app.use(express.json());
+
+app.use(setCors);
 
 app.get('/', async (req, res) => {
   const username = 'username';
