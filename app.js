@@ -36,7 +36,7 @@ app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
 
 // Routes to retrieve data from MySQL Database
-app.use('/user', userRoutes);
+// app.use('/user', userRoutes);
 app.use('/diary', diaryRoutes);
 app.use('/eat-time', eatTimeRoutes);
 app.use('/food', foodRoutes);
