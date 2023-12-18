@@ -76,3 +76,26 @@ export async function addFood(
     };
   }
 }
+
+export async function addToDiary(diary_id, food_id, eat_time) {
+  try {
+    const [result] = await pool.query(
+      `
+      INSERT INTO eat_time (diary_id, food_id, eat_time) 
+      VALUES (?, ?, ?)
+      `,
+      [diary_id, food_id, eat_time]
+    );
+
+    const id = result.insertId;
+    return {
+      error: true,
+      message: `Added food to today's diary`,
+    };
+  } catch (error) {
+    return {
+      error: true,
+      message: 'Error adding food',
+    };
+  }
+}

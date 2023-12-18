@@ -1,5 +1,10 @@
 import express from 'express';
-import { getFoods, getFoodById, addFood } from '../handlers/foods.js';
+import {
+  getFoods,
+  getFoodById,
+  addFood,
+  addToDiary,
+} from '../handlers/foods.js';
 
 const router = express.Router();
 router.get('/', async (req, res) => {
@@ -9,14 +14,27 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
-  const notes = await getFoodById(id);
-  res.status(201).send(notes);
+  const foods = await getFoodById(id);
+  res.status(201).send(foods);
 });
 
 router.post('/', async (req, res) => {
   const { user_id, food_name, energy, protein, carbohydrate } = req.body;
-  const notes = await addFood(user_id, food_name, energy, protein, carbohydrate);
-  res.send(notes);
+  const foods = await addFood(
+    user_id,
+    food_name,
+    energy,
+    protein,
+    carbohydrate
+  );
+  res.send(foods);
+});
+
+router.post('/addToDiary', async (req, res) => {
+  const { diary_id, food_id, eat_time } = req.body;
+  console.log('adding to diary');
+  const foods = await addToDiary(diary_id, food_id, eat_time);
+  res.send(foods);
 });
 
 export default router;
