@@ -11,8 +11,6 @@ import { verifyToken } from './middleware/verifyToken.js';
 import jwt from 'jsonwebtoken';
 import setCors from './middleware/corsMiddleware.js';
 
-import setCors from './middleware/corsMiddleware.js'; // Import the CORS middleware
-
 const app = express();
 app.use(express.json());
 
