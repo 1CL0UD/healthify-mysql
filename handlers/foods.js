@@ -6,14 +6,15 @@ export async function getFoods() {
     return {
       error: false,
       message: 'Food fetched successfully',
-      listStory: [rows],
+      listFoods: [rows],
+
     };
   } catch (error) {
     // Handle errors if any occurred during the database query
     return {
       error: true,
       message: 'Error fetching food data',
-      listStory: [],
+      listFoods: [],
     };
   }
 }
@@ -73,6 +74,29 @@ export async function addFood(
       error: true,
       message: 'Error adding food',
       foodDetails: null,
+    };
+  }
+}
+
+export async function addToDiary(diary_id, food_id, eat_time) {
+  try {
+    const [result] = await pool.query(
+      `
+      INSERT INTO eat_time (diary_id, food_id, eat_time) 
+      VALUES (?, ?, ?)
+      `,
+      [diary_id, food_id, eat_time]
+    );
+
+    const id = result.insertId;
+    return {
+      error: true,
+      message: `Added food to today's diary`,
+    };
+  } catch (error) {
+    return {
+      error: true,
+      message: 'Error adding food',
     };
   }
 }
