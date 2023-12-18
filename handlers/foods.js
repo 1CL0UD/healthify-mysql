@@ -7,6 +7,7 @@ export async function getFoods() {
       error: false,
       message: 'Food fetched successfully',
       listFoods: [rows],
+
     };
   } catch (error) {
     // Handle errors if any occurred during the database query

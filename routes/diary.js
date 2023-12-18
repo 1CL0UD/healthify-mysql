@@ -26,8 +26,8 @@ router.get('/diaryId/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { diary_id, user_id, diary_date, calorie_target } = req.body;
-  const diary = await addDiary(diary_id, user_id, diary_date, calorie_target);
+  const { user_id, diary_date, calorie_target } = req.body;
+  const diary = await addDiary(user_id, diary_date, calorie_target);
   res.send(diary);
 });
 
