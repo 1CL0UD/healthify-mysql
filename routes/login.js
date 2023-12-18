@@ -20,7 +20,7 @@ loginRouter.post('/', async (req, res) => {
       error: false,
       message: 'success',
       loginResult: {
-        userId: user.id,
+        userId: user.user_id,
         name: user.username,
         token: token,
       },
