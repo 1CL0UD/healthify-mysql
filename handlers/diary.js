@@ -78,34 +78,29 @@ export async function getDiaryByIdWithName(id) {
       `,
       [id]
     );
-    // Format diary_date before sending the response
-    const formattedRows = rows.map((row) => ({
-      ...row,
-      diary_date: formatDate(row.diary_date),
-    }));
     return {
       error: false,
       message: 'Diary with food names fetched successfully',
-      diaryDetailsWithFood: formattedRows,
+      diaryDetailsWithFood: rows,
     };
   } catch (error) {
+    console.log(error);
     return {
       error: true,
       message: 'Error fetching diary details with food names',
-      diaryDetailsWithFood: [],
     };
   }
 }
 
 // Handler to add a diary entry
-export async function addDiary(diary_id, user_id, diary_date, calorie_target) {
+export async function addDiary(user_id, diary_date, calorie_target) {
   try {
     const [result] = await pool.query(
       `
-      INSERT INTO diary (diary_id, user_id, diary_date, calorie_target) 
-      VALUES (?, ?, ?, ?)
+      INSERT INTO diary (user_id, diary_date, calorie_target) 
+      VALUES (?, ?, ?)
       `,
-      [diary_id, user_id, diary_date, calorie_target]
+      [user_id, diary_date, calorie_target]
     );
     return {
       error: false,
