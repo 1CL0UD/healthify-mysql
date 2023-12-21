@@ -101,19 +101,20 @@ export async function addDiary(user_id, diary_date, calorie_target) {
       `,
       [user_id, diary_date]
     );
-    const [result] = await pool.query(
-      `
-      INSERT INTO diary (user_id, diary_date, calorie_target) 
-      VALUES (?, ?, ?)
-      `,
-      [user_id, diary_date, calorie_target]
-    );
+
     if (check.length > 0) {
       return {
         error: true,
         message: 'Error adding diary, diary already exists',
       };
     } else {
+      const [result] = await pool.query(
+        `
+      INSERT INTO diary (user_id, diary_date, calorie_target) 
+      VALUES (?, ?, ?)
+      `,
+        [user_id, diary_date, calorie_target]
+      );
       return checkDiary(user_id, diary_date);
     }
   } catch (error) {
