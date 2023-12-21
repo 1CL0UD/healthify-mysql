@@ -95,6 +95,12 @@ export async function getDiaryByIdWithName(id) {
 // Handler to add a diary entry
 export async function addDiary(user_id, diary_date, calorie_target) {
   try {
+    const [check] = await pool.query(
+      `
+      SELECT diary_id FROM diary WHERE user_id = ? AND diary_date = ?
+      `,
+      [user_id, diary_date]
+    );
     const [result] = await pool.query(
       `
       INSERT INTO diary (user_id, diary_date, calorie_target) 
@@ -102,10 +108,14 @@ export async function addDiary(user_id, diary_date, calorie_target) {
       `,
       [user_id, diary_date, calorie_target]
     );
-    return {
-      error: false,
-      message: 'Added food to user list of foods',
-    };
+    if (check.length > 0) {
+      return {
+        error: true,
+        message: 'Error adding diary, diary already exists',
+      };
+    } else {
+      return checkDiary(user_id, diary_date);
+    }
   } catch (error) {
     return {
       error: true,
