@@ -19,11 +19,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { user_id, food_name, energy, protein, carbohydrate, fat } = req.body;
+  const { user_id, food_name, calories, protein, carbohydrate, fat } = req.body;
   const foods = await addFood(
     user_id,
     food_name,
-    energy,
+    calories,
     protein,
     carbohydrate,
     fat

@@ -52,7 +52,7 @@ export async function getFoodById(id) {
 export async function addFood(
   user_id,
   food_name,
-  energy,
+  calories,
   protein,
   carbohydrate,
   fat
@@ -63,7 +63,7 @@ export async function addFood(
       INSERT INTO foods (user_id, food_name, calories, protein, carbohydrate, fat) 
       VALUES (?, ?, ?, ?, ?, ?)
       `,
-      [user_id, food_name, energy, protein, carbohydrate, fat]
+      [user_id, food_name, calories, protein, carbohydrate, fat]
     );
 
     const id = result.insertId;
