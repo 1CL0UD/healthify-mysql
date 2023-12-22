@@ -71,17 +71,26 @@ export async function getDiaryByIdWithName(id) {
   try {
     const [rows] = await pool.query(
       `
-      SELECT eat.*, foods.food_name
+      SELECT eat.*, foods.food_name, foods.calories
       FROM eat_time AS eat
       JOIN foods ON eat.food_id = foods.food_id
       WHERE eat.diary_id = ?; 
       `,
       [id]
     );
+
+    const diaryDetailsWithFoodAndCalories = rows.map((row) => ({
+      eat_time_id: row.eat_time_id,
+      diary_id: row.diary_id,
+      food_id: row.food_id,
+      eat_time: row.eat_time,
+      food_name: row.food_name,
+      calories: row.calories, // Adding calories to the response
+    }));
     return {
       error: false,
-      message: 'Diary with food names fetched successfully',
-      diaryDetailsWithFood: rows,
+      message: 'Diary with food names and calories fetched successfully',
+      diaryDetailsWithFoodAndCalories: diaryDetailsWithFoodAndCalories,
     };
   } catch (error) {
     console.log(error);
